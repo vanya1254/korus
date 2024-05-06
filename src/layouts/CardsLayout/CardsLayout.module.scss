@@ -1,0 +1,41 @@
+@import "../../scss/variables";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--Neutral-1-50);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--main-gap);
+
+    padding: $headerPadding;
+    background-color: var(--Neutral-1);
+    box-shadow: $headerShadow;
+  }
+
+  &_title {
+    color: var(--character-title-85);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px; /* 120% */
+  }
+  &_subtitle {
+    display: block;
+    align-self: end;
+
+    color: var(--character-secondary-45);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: var(--main-gap);
+    padding: var(--main-padding);
+  }
+}

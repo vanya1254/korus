@@ -1,10 +1,12 @@
+@import "../../scss/variables";
+
 .root {
   display: flex;
   align-items: center;
   gap: 16px;
 
   width: 100%;
-  padding: 16px 24px;
+  padding: $headerPadding;
   background-color: var(--Neutral-1);
 
   &_btn {

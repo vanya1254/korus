@@ -1,8 +1,23 @@
 import React from "react";
-import "./App.css";
 
-function App() {
-  return <div className="App"></div>;
-}
+import { Home } from "./pages/Home";
+
+import { Header } from "./components/Header";
+
+import "./App.scss";
+
+const App: React.FC = () => {
+  return (
+    <>
+      <Header
+        title={"Сборник рецептов из разных стран мира"}
+        hasBackBtn={false}
+      />
+      <div className="App">
+        <Home />
+      </div>
+    </>
+  );
+};
 
 export default App;

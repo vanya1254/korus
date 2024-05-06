@@ -1,0 +1,22 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  width: 100%;
+  padding: 16px 24px;
+  background-color: var(--Neutral-1);
+
+  &_btn {
+    line-height: 0;
+  }
+
+  &_title {
+    color: var(--character-title-85);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 28px; /* 116.667% */
+
+    padding: 6px 0;
+  }
+}

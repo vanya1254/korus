@@ -1,19 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import { difficultyConvert } from "../../constants";
 
 import styles from "./Card.module.scss";
 
-export const Card: React.FC = () => {
+export enum Dificulty {
+  EASY = "Easy",
+  MEDIUM = "Medium",
+  HARD = "Hard",
+}
+
+type CardPropsT = {
+  id: number;
+  name: string;
+  cookTimeMinutes: number;
+  difficulty: string;
+  cuisine: string;
+  image: string;
+  mealType: string[];
+};
+
+export const Card: React.FC<CardPropsT> = ({
+  id,
+  name,
+  cookTimeMinutes,
+  difficulty,
+  cuisine,
+  image,
+  mealType,
+}) => {
+  const [stars, setStars] = useState<boolean[]>([false, false, false]);
+
+  const updateStars = (): void => {
+    // @ts-ignore: Unreachable code error
+    setStars(difficultyConvert[difficulty.toLowerCase()]);
+  };
+
+  useEffect(() => {
+    if (difficulty) {
+      updateStars();
+    }
+  }, []);
+
   return (
     <section className={styles.root}>
       <div className={styles.root__left}>
         <div className={styles.root__header}>
-          <h3 className={styles.root_title}>Наименование блюда</h3>
+          <h3 className={styles.root_title}>{name}</h3>
         </div>
-        <img
-          className={styles.root_img}
-          src="https://www.desktopbackground.org/download/768x1280/2012/02/12/342928_earth-sunset-wallpapers-hd_2880x1800_h.jpg"
-          alt=""
-        />
+        <div className={styles.root__img}>
+          <img className={styles.root_img} src={image} alt={name} />
+        </div>
       </div>
       <div className={styles.root__right}>
         <p className={styles.root__right_text}>
@@ -35,31 +72,51 @@ export const Card: React.FC = () => {
               fill="black"
             />
           </svg>
-          <h4 className={styles.root__article_title}>30 минут</h4>
+          <h4 className={styles.root__article_title}>
+            {cookTimeMinutes} минут
+          </h4>
         </article>
         <article className={styles.root__article}>
           <h4 className={styles.root__article_title}>Сложность:</h4>
-          {[...new Array(3)].map((_, i) => (
-            <svg
-              key={i}
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="24"
-              viewBox="0 0 25 24"
-              fill={true ? "black" : "none"}
-            >
-              <path
-                d="M9.01675 16.825L12.1667 14.925L15.3167 16.85L14.4917 13.25L17.2667 10.85L13.6167 10.525L12.1667 7.125L10.7167 10.5L7.06675 10.825L9.84175 13.25L9.01675 16.825ZM5.99175 21L7.61675 13.975L2.16675 9.25L9.36675 8.625L12.1667 2L14.9667 8.625L22.1667 9.25L16.7167 13.975L18.3417 21L12.1667 17.275L5.99175 21Z"
-                fill="black"
-              />
-            </svg>
-          ))}
+          <div className={styles.root__stars}>
+            {stars.map((star, i) =>
+              star ? (
+                <svg
+                  key={i}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="24"
+                  viewBox="0 0 25 24"
+                  fill="none"
+                >
+                  <path
+                    d="M5.99175 21L7.61675 13.975L2.16675 9.25L9.36675 8.625L12.1667 2L14.9667 8.625L22.1667 9.25L16.7167 13.975L18.3417 21L12.1667 17.275L5.99175 21Z"
+                    fill="black"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  key={i}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="24"
+                  viewBox="0 0 25 24"
+                  fill="none"
+                >
+                  <path
+                    d="M9.01675 16.825L12.1667 14.925L15.3167 16.85L14.4917 13.25L17.2667 10.85L13.6167 10.525L12.1667 7.125L10.7167 10.5L7.06675 10.825L9.84175 13.25L9.01675 16.825ZM5.99175 21L7.61675 13.975L2.16675 9.25L9.36675 8.625L12.1667 2L14.9667 8.625L22.1667 9.25L16.7167 13.975L18.3417 21L12.1667 17.275L5.99175 21Z"
+                    fill="black"
+                  />
+                </svg>
+              )
+            )}
+          </div>
         </article>
         <article className={styles.root__article}>
-          <h4 className={styles.root__article_title}>Европейская кухня</h4>
+          <h4 className={styles.root__article_title}>{cuisine} кухня</h4>
         </article>
         <article className={styles.root__article}>
-          <h4 className={styles.root__article_title}>Завтрак, Обед, Ужин</h4>
+          <h4 className={styles.root__article_title}>{mealType.join(", ")}</h4>
         </article>
       </div>
     </section>

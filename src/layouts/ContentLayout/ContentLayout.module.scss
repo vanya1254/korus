@@ -31,13 +31,6 @@
     line-height: 22px; /* 157.143% */
   }
 
-  &__cards {
-    display: grid;
-    grid-template-columns: repeat(3, 452px);
-    grid-template-rows: repeat(2, 354px);
-    column-gap: var(--main-gap);
-    row-gap: 8px;
-
-    padding: var(--main-padding);
+  &__content {
   }
 }

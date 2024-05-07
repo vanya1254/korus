@@ -1,2 +1,14 @@
 .App {
 }
+
+.prologue {
+  &__img {
+    img {
+    }
+  }
+
+  &__content {
+    &__text {
+    }
+  }
+}

@@ -1,14 +1,14 @@
 import React from "react";
 
-import styles from "./CardsLayout.module.scss";
+import styles from "./ContentLayout.module.scss";
 
-type CardsLayoutPropsT = {
+type ContentLayoutPropsT = {
   title: string;
   count: number;
   children: JSX.Element[] | JSX.Element | React.ReactNode | React.ReactNode[];
 };
 
-export const CardsLayout: React.FC<CardsLayoutPropsT> = ({
+export const ContentLayout: React.FC<ContentLayoutPropsT> = ({
   title,
   count,
   children,
@@ -19,7 +19,7 @@ export const CardsLayout: React.FC<CardsLayoutPropsT> = ({
         <h2 className={styles.root_title}>{title}</h2>
         <span className={styles.root_subtitle}>{count}</span>
       </div>
-      <div className={styles.root__cards}>{children}</div>
+      <div className={styles.root__content}>{children}</div>
     </section>
   );
 };

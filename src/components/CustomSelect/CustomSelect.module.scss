@@ -1,0 +1,34 @@
+.root {
+  position: relative;
+  padding: 8px 16px;
+  border-radius: 2px;
+  border: 1px solid var(--Neutral-5, #d9d9d9);
+  background: var(--Neutral-1, #fff);
+
+  /* drop-shadow/button-secondary */
+  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+  -webkit-appearance: none; /* Chrome */
+  -moz-appearance: none; /* Firefox */
+  appearance: none; /* убираем дефолнтные стрелочки */
+
+  &_option {
+    font-family: inherit;
+    color: var(--character-primary-85);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+  }
+
+  &::after {
+    content: url("../../../public/img/dropdown-icon.svg");
+    display: block;
+    background: url("../../../public/img/dropdown-icon.svg") no-repeat;
+    pointer-events: none;
+    position: absolute;
+    top: calc(50% - 5.625px);
+    right: 16px;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+  }
+}

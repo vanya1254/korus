@@ -1,0 +1,28 @@
+@import "../../scss/variables";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 17.333333px;
+
+  &__select {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+  }
+
+  &_label {
+    width: $labelWidth;
+    color: #000;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px; /* 150% */
+  }
+
+  &_options {
+    width: calc(100% - ($labelWidth + 12px));
+  }
+}

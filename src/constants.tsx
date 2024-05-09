@@ -12,5 +12,7 @@ export const selects = {
   mealTypes: [
     { name: "Все типы", value: "" },
     { name: "Dinner", value: "Dinner" },
+    { name: "Breakfast", value: "Breakfast" },
+    { name: "Lunch", value: "Lunch" },
   ],
 };

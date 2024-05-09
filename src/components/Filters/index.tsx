@@ -8,7 +8,7 @@ import styles from "./Filters.module.scss";
 export const Filters: React.FC = () => {
   return (
     <form className={styles.root}>
-      <p className={styles.root__select}>
+      <div className={styles.root__select}>
         <label className={styles.root_label} htmlFor="cuisine">
           Кухня:
         </label>
@@ -18,8 +18,8 @@ export const Filters: React.FC = () => {
           htmlName="cuisine"
           options={selects.cuisines}
         />
-      </p>
-      <p className={styles.root__select}>
+      </div>
+      <div className={styles.root__select}>
         <label className={styles.root_label} htmlFor="cuisine">
           Тип блюда:
         </label>
@@ -29,7 +29,7 @@ export const Filters: React.FC = () => {
           htmlName="mealType"
           options={selects.mealTypes}
         />
-      </p>
+      </div>
       <div className={styles.root__select}>
         <label className={styles.root_label} htmlFor="dificulty">
           Сложность приготовления:

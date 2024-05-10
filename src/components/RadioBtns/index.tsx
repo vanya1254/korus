@@ -2,21 +2,30 @@ import React from "react";
 import { CustomRadioBtn } from "../CustomRadioBtn";
 import { OptionT } from "../CustomSelect";
 
+import styles from "./RadioBtns.module.scss";
+
 type RadioBtnsPropsT = {
+  className?: string;
   htmlName: string;
   group: OptionT[];
 };
 
-export const RadioBtns: React.FC<RadioBtnsPropsT> = ({ htmlName, group }) => {
+export const RadioBtns: React.FC<RadioBtnsPropsT> = ({
+  className,
+  htmlName,
+  group,
+}) => {
   return (
-    <div>
-      {group.map((dificulty, i) => (
+    <div className={`${styles.root} ${className ? className : ""}`}>
+      {group.map((item, i) => (
         <CustomRadioBtn
-          htmlId={`${dificulty}${i}`}
+          key={i}
+          className={styles.root_btn}
+          htmlId={`${htmlName}${i}`}
           htmlName={htmlName}
-          htmlChecked={i ? false : true}
-          value={dificulty.value}
-          text={dificulty.name}
+          //   htmlChecked={i ? false : true}
+          value={item.value}
+          text={item.name}
         />
       ))}
     </div>

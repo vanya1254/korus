@@ -32,12 +32,14 @@ export const Filters: React.FC = () => {
         />
       </div>
       <fieldset className={styles.root__select}>
-        <legend
-          className={styles.root_label} //htmlFor="dificulty"
-        >
+        <label className={styles.root_label} htmlFor="dificulty">
           Сложность приготовления:
-        </legend>
-        <RadioBtns htmlName="dificulty" group={selects.dificulties} />
+        </label>
+        <RadioBtns
+          className={styles.root_options}
+          htmlName="dificulty"
+          group={selects.dificulties}
+        />
       </fieldset>
       <button>Сбросить фильтры</button>
     </form>

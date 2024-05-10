@@ -1,2 +1,17 @@
 .root {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 8px 16px;
+
+  &_radio {
+    display: none;
+  }
+
+  &_label {
+    color: var(--Neutral-13);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px; /* 171.429% */
+  }
 }

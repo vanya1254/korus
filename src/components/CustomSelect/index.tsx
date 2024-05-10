@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styles from "./CustomSelect.module.scss";
 
-type OptionT = {
+export type OptionT = {
   name: string;
   value: string;
 };
@@ -33,6 +33,7 @@ export const CustomSelect: React.FC<CustomSelectPropsT> = ({
 
   const onClickOption = (opt: OptionT) => {
     setSelected(opt);
+    setIsOpen(false);
   };
 
   return (

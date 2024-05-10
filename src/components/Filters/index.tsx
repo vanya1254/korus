@@ -4,6 +4,7 @@ import { CustomSelect } from "../CustomSelect";
 import { selects } from "../../constants";
 
 import styles from "./Filters.module.scss";
+import { RadioBtns } from "../RadioBtns";
 
 export const Filters: React.FC = () => {
   return (
@@ -30,17 +31,14 @@ export const Filters: React.FC = () => {
           options={selects.mealTypes}
         />
       </div>
-      <div className={styles.root__select}>
-        <label className={styles.root_label} htmlFor="dificulty">
+      <fieldset className={styles.root__select}>
+        <legend
+          className={styles.root_label} //htmlFor="dificulty"
+        >
           Сложность приготовления:
-        </label>
-        <div className={styles.root_options}>
-          <button>1</button>
-          <button>b</button>
-          <button>s</button>
-          <button disabled>f</button>
-        </div>
-      </div>
+        </legend>
+        <RadioBtns htmlName="dificulty" group={selects.dificulties} />
+      </fieldset>
       <button>Сбросить фильтры</button>
     </form>
   );

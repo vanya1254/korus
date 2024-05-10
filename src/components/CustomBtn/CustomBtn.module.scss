@@ -1,0 +1,22 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 15px;
+  width: fit-content;
+
+  background: var(--Neutral-1, #fff);
+  color: var(--character-title-85);
+  text-align: center;
+
+  border-radius: 2px;
+  border: 1px solid var(--Neutral-5, #d9d9d9);
+
+  /* drop-shadow/button-secondary */
+  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+
+  /* Body/regular */
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px; /* 157.143% */
+}

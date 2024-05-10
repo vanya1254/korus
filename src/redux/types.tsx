@@ -18,7 +18,13 @@ export type RecipeT = {
 };
 
 export enum Difficulty {
-  EASY = "Easy",
-  MEDIUM = "Medium",
-  HARD = "Hard",
+  Easy = "EASY",
+  Medium = "MEDIUM",
+  Hard = "HARD",
+}
+
+export enum Status {
+  Pending = "PENDING",
+  Fulfilled = "FULFILLED",
+  Rejected = "REJECTED",
 }

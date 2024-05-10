@@ -1,3 +1,6 @@
+import { RecipeT, Status } from "../../types";
+
 export interface RecipesState {
-  value: number;
+  recipes: RecipeT[];
+  status: Status;
 }

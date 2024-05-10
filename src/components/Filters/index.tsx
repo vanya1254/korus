@@ -41,7 +41,13 @@ export const Filters: React.FC = () => {
           group={selects.dificulties}
         />
       </fieldset>
-      <button>Сбросить фильтры</button>
+      <button
+        className={styles.root_reset}
+        onClick={(e) => e.preventDefault()}
+        disabled
+      >
+        Сбросить фильтры
+      </button>
     </form>
   );
 };

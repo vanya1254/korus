@@ -1,4 +1,8 @@
+@import "../../scss/mixins";
+
 .root {
+  @include fontBodyRegular();
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,9 +18,4 @@
 
   /* drop-shadow/button-secondary */
   box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
-
-  /* Body/regular */
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 22px; /* 157.143% */
 }

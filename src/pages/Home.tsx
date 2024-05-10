@@ -1,7 +1,8 @@
 import React from "react";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
-import { Additional, Cards, Filters, Pagination } from "../components";
+import { Additional, Cards, Filters, Header, Pagination } from "../components";
+
 import { Dificulty } from "../components/Card";
 
 export type RecipeT = {
@@ -23,7 +24,7 @@ export type RecipeT = {
   mealType: string[];
 };
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   const recipes: RecipeT[] = [
     {
       id: 1,
@@ -220,38 +221,46 @@ export const Home: React.FC = () => {
   ];
 
   return (
-    <MainLayout>
-      <AsideLayout>
-        <div className="prologue">
-          <div className="prologue__img">
-            <img
-              src="https://sanecotec.com/wp-content/uploads/2018/08/placeholder.png"
-              alt="image"
-            />
+    <>
+      <Header
+        title={"Сборник рецептов из разных стран мира"}
+        hasBackBtn={false}
+      />
+      <MainLayout>
+        <AsideLayout>
+          <div className="prologue">
+            <div className="prologue__img">
+              <img
+                src="https://sanecotec.com/wp-content/uploads/2018/08/placeholder.png"
+                alt="image"
+              />
+            </div>
+            <div className="prologue__content">
+              <p className="prologue__content__text">
+                В нашей жизни, когда время становится все более ценным ресурсом,
+                задача планирования приема пищи становится все более сложной.
+              </p>
+              <p className="prologue__content__text">
+                Часто мы сталкиваемся с дилеммой: что приготовить на завтрак,
+                обед или ужин? Каким образом мы можем легко и быстро
+                определиться с выбором блюда и не тратить много времени на
+                принятие этого решения?
+              </p>
+              <p className="prologue__content__text">
+                Наш сервис поможет: выбирайте параметры - и вперед!
+              </p>
+            </div>
           </div>
-          <div className="prologue__content">
-            <p className="prologue__content__text">
-              В нашей жизни, когда время становится все более ценным ресурсом,
-              задача планирования приема пищи становится все более сложной.
-            </p>
-            <p className="prologue__content__text">
-              Часто мы сталкиваемся с дилеммой: что приготовить на завтрак, обед
-              или ужин? Каким образом мы можем легко и быстро определиться с
-              выбором блюда и не тратить много времени на принятие этого
-              решения?
-            </p>
-            <p className="prologue__content__text">
-              Наш сервис поможет: выбирайте параметры - и вперед!
-            </p>
-          </div>
-        </div>
-        <Filters />
-        <Additional />
-      </AsideLayout>
-      <ContentLayout title={"Найденные рецепты"} count={0}>
-        <Cards recipes={recipes} />
-        <Pagination />
-      </ContentLayout>
-    </MainLayout>
+          <Filters />
+          <Additional />
+        </AsideLayout>
+        <ContentLayout title={"Найденные рецепты"} count={0}>
+          <Cards recipes={recipes} />
+          <Pagination />
+        </ContentLayout>
+      </MainLayout>
+    </>
   );
 };
+
+export default Home;

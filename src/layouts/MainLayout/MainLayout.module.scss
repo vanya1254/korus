@@ -2,6 +2,8 @@
   display: grid;
   grid-template-columns: 465px auto;
   padding-top: var(--main-gap);
-  padding-right: var(--main-padding);
+  padding-right: 14px;
   gap: var(--main-gap);
+
+  height: calc(100vh - 72px - (var(--main-padding) * 2)); // height of header
 }

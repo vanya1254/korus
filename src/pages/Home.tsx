@@ -3,26 +3,7 @@ import React from "react";
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
 
-import { Dificulty } from "../components/Card";
-
-export type RecipeT = {
-  id: number;
-  name: string;
-  ingredients: string[];
-  instructions: string[];
-  prepTimeMinutes: number;
-  cookTimeMinutes: number;
-  servings: number;
-  difficulty: Dificulty;
-  cuisine: string;
-  caloriesPerServing: number;
-  tags: string[];
-  userId: number;
-  image: string;
-  rating: number;
-  reviewCount: number;
-  mealType: string[];
-};
+import { RecipeT, Difficulty } from "../redux/types";
 
 const Home: React.FC = () => {
   const recipes: RecipeT[] = [
@@ -48,7 +29,7 @@ const Home: React.FC = () => {
       prepTimeMinutes: 20,
       cookTimeMinutes: 30,
       servings: 4,
-      difficulty: Dificulty.EASY,
+      difficulty: Difficulty.EASY,
       cuisine: "Европейская",
       caloriesPerServing: 300,
       tags: ["Pizza", "Italian"],
@@ -80,7 +61,7 @@ const Home: React.FC = () => {
       prepTimeMinutes: 20,
       cookTimeMinutes: 30,
       servings: 4,
-      difficulty: Dificulty.MEDIUM,
+      difficulty: Difficulty.MEDIUM,
       cuisine: "Европейская",
       caloriesPerServing: 300,
       tags: ["Pizza", "Italian"],
@@ -112,7 +93,7 @@ const Home: React.FC = () => {
       prepTimeMinutes: 20,
       cookTimeMinutes: 30,
       servings: 4,
-      difficulty: Dificulty.EASY,
+      difficulty: Difficulty.EASY,
       cuisine: "Европейская",
       caloriesPerServing: 300,
       tags: ["Pizza", "Italian"],
@@ -144,7 +125,7 @@ const Home: React.FC = () => {
       prepTimeMinutes: 20,
       cookTimeMinutes: 30,
       servings: 4,
-      difficulty: Dificulty.HARD,
+      difficulty: Difficulty.HARD,
       cuisine: "Европейская",
       caloriesPerServing: 300,
       tags: ["Pizza", "Italian"],
@@ -176,7 +157,7 @@ const Home: React.FC = () => {
       prepTimeMinutes: 20,
       cookTimeMinutes: 30,
       servings: 4,
-      difficulty: Dificulty.EASY,
+      difficulty: Difficulty.EASY,
       cuisine: "Европейская",
       caloriesPerServing: 300,
       tags: ["Pizza", "Italian"],
@@ -208,7 +189,7 @@ const Home: React.FC = () => {
       prepTimeMinutes: 20,
       cookTimeMinutes: 30,
       servings: 4,
-      difficulty: Dificulty.EASY,
+      difficulty: Difficulty.EASY,
       cuisine: "Европейская",
       caloriesPerServing: 300,
       tags: ["Pizza", "Italian"],

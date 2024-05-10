@@ -1,7 +1,8 @@
 import React from "react";
 
 import { Card } from "..";
-import { RecipeT } from "../../pages/Home";
+
+import { RecipeT } from "../../redux/types";
 
 import styles from "./Cards.module.scss";
 

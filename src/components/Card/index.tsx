@@ -4,12 +4,6 @@ import { difficultyConvert } from "../../constants";
 
 import styles from "./Card.module.scss";
 
-export enum Dificulty {
-  EASY = "Easy",
-  MEDIUM = "Medium",
-  HARD = "Hard",
-}
-
 type CardPropsT = {
   id: number;
   name: string;

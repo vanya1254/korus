@@ -15,7 +15,7 @@ export const selects = {
     { name: "Breakfast", value: "Breakfast" },
     { name: "Lunch", value: "Lunch" },
   ],
-  dificulties: [
+  difficulties: [
     { name: "Любая", value: "" },
     { name: "Низкая", value: "Низкая" },
     { name: "Средняя", value: "Средняя" },

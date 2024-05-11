@@ -13,4 +13,7 @@ export type FiltersFieldsT = {
   mealType: string[];
 };
 
-export type FiltersT = Record<string, string>;
+export type FiltersT = {
+  name: string;
+  value: string[];
+};

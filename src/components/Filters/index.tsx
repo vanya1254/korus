@@ -1,10 +1,10 @@
 import React from "react";
 
-import { CustomSelect } from "../CustomSelect";
+import { CustomSelect, RadioBtns } from "..";
+
 import { selects } from "../../constants";
 
 import styles from "./Filters.module.scss";
-import { RadioBtns } from "../RadioBtns";
 
 export const Filters: React.FC = () => {
   return (
@@ -38,7 +38,7 @@ export const Filters: React.FC = () => {
         <RadioBtns
           className={styles.root_options}
           htmlName="difficulty"
-          group={selects.dificulties}
+          group={selects.difficulties}
         />
       </fieldset>
       <button

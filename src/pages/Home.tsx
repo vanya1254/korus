@@ -3,8 +3,11 @@ import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import { recipesSelector } from "../redux/slices/recipes/selectors";
+import { filtersSelector } from "../redux/slices/filters/selectors";
 import { fetchRecipes } from "../redux/slices/recipes/slice";
-import { fetchFiltersFields } from "../redux/slices/filters/slice";
+import { fetchFiltersFields, setFilters } from "../redux/slices/filters/slice";
+
+import getFilters from "../utils/getFilters";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
@@ -12,19 +15,30 @@ import { Additional, Cards, Filters, Header, Pagination } from "../components";
 import { Status } from "../redux/types";
 
 const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const filtersState = useAppSelector(filtersSelector);
+  const { status, recipes } = useAppSelector(recipesSelector);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const isFirstLoading = useRef(true);
-  const dispatch = useAppDispatch();
-  const { status, recipes } = useAppSelector(recipesSelector);
 
   useEffect(() => {
     if (isFirstLoading.current) {
       dispatch(fetchFiltersFields());
       dispatch(fetchRecipes());
-
-      isFirstLoading.current = false;
     }
   }, []);
+
+  useEffect(() => {
+    if (isFirstLoading.current) {
+      if (filtersState.status === Status.Fulfilled) {
+        const converted = getFilters(filtersState.filtersFields);
+        dispatch(setFilters(converted));
+
+        isFirstLoading.current = false;
+      }
+    }
+  }, [filtersState.status]);
 
   // useEffect(() => {}, [searchParams]);
 

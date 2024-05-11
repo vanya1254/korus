@@ -8,7 +8,7 @@ export const fetchRecipes = createAsyncThunk(
   async () => {
     try {
       const response = await fetch(
-        "https://dummyjson.com/recipes?limit=6&select=id,name,cookTimeMinutes,difficulty,cuisine,image,mealType"
+        `https://dummyjson.com/recipes?limit=50&select=id,name,cookTimeMinutes,difficulty,cuisine,image,mealType`
       );
       const data = await response.json();
       const { recipes } = await data;
@@ -25,7 +25,7 @@ const initialState: RecipesState = {
   status: Status.Pending,
 };
 
-export const RecipesSlice = createSlice({
+export const recipesSlice = createSlice({
   name: "recipes",
   initialState,
   reducers: {},
@@ -49,6 +49,6 @@ export const RecipesSlice = createSlice({
   },
 });
 
-export const {} = RecipesSlice.actions;
+export const {} = recipesSlice.actions;
 
-export default RecipesSlice.reducer;
+export default recipesSlice.reducer;

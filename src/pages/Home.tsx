@@ -1,20 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import { recipesSelector } from "../redux/slices/recipes/selectors";
 import { fetchRecipes } from "../redux/slices/recipes/slice";
+import { fetchFiltersFields } from "../redux/slices/filters/slice";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
+
 import { Status } from "../redux/types";
 
 const Home: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isFirstLoading = useRef(true);
   const dispatch = useAppDispatch();
   const { status, recipes } = useAppSelector(recipesSelector);
 
   useEffect(() => {
-    dispatch(fetchRecipes());
+    if (isFirstLoading.current) {
+      dispatch(fetchFiltersFields());
+      dispatch(fetchRecipes());
+
+      isFirstLoading.current = false;
+    }
   }, []);
+
+  // useEffect(() => {}, [searchParams]);
+
+  const updateQS = (name: string, value: string) => {
+    setSearchParams((prevParams) => {
+      prevParams.delete(name);
+      prevParams.append(name, value);
+      return prevParams;
+    });
+  };
 
   return (
     <>

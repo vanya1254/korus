@@ -22,3 +22,5 @@ export const selects = {
     { name: "Высокая", value: "Высокая" },
   ],
 };
+
+export const LIMIT = 6;

@@ -1,7 +1,7 @@
-@mixin shadow() {
-  box-shadow: inset 0px 0px 0px 1px var(--Neutral-5);
-  -webkit-box-shadow: inset 0px 0px 0px 1px var(--Neutral-5);
-  -moz-box-shadow: inset 0px 0px 0px 1px var(--Neutral-5);
+@mixin shadow($color: --Neutral-5) {
+  box-shadow: inset 0px 0px 0px 1px var($color);
+  -webkit-box-shadow: inset 0px 0px 0px 1px var(-$color);
+  -moz-box-shadow: inset 0px 0px 0px 1px var($color);
   background-color: var(--Neutral-1);
 }
 

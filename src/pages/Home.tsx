@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
@@ -8,19 +8,21 @@ import { fetchRecipes } from "../redux/slices/recipes/slice";
 import { fetchFiltersFields, setFilters } from "../redux/slices/filters/slice";
 
 import getFilters from "../utils/getFilters";
+import { LIMIT } from "../constants";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
 
-import { Status } from "../redux/types";
+import { RecipeT, Status } from "../redux/types";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const filtersState = useAppSelector(filtersSelector);
   const { status, recipes } = useAppSelector(recipesSelector);
-
   const [searchParams, setSearchParams] = useSearchParams();
   const isFirstLoading = useRef(true);
+  const [curRecipes, setCurRecipes] = useState<RecipeT[]>([]);
+  const [curIndexRecipe, setCurIndexRecipe] = useState(0);
 
   useEffect(() => {
     if (isFirstLoading.current) {
@@ -31,14 +33,23 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (isFirstLoading.current) {
-      if (filtersState.status === Status.Fulfilled) {
+      if (
+        filtersState.status === Status.Fulfilled &&
+        status === Status.Fulfilled
+      ) {
         const converted = getFilters(filtersState.filtersFields);
         dispatch(setFilters(converted));
+        setCurRecipes(
+          recipes.slice(
+            curIndexRecipe,
+            Number(searchParams.get("page") || 1) * LIMIT
+          )
+        );
 
         isFirstLoading.current = false;
       }
     }
-  }, [filtersState.status]);
+  }, [filtersState.status, status]);
 
   // useEffect(() => {}, [searchParams]);
 
@@ -84,9 +95,12 @@ const Home: React.FC = () => {
           <Filters />
           <Additional />
         </AsideLayout>
-        <ContentLayout title={"Найденные рецепты"} count={0}>
+        <ContentLayout
+          title={"Найденные рецепты"}
+          count={status === Status.Fulfilled ? recipes.length : 0}
+        >
           {status === Status.Fulfilled ? (
-            <Cards recipes={recipes} />
+            <Cards recipes={curRecipes} />
           ) : (
             "LOADING"
           )}

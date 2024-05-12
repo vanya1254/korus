@@ -8,10 +8,10 @@ type CardPropsT = {
   id: number;
   name: string;
   cookTimeMinutes: number;
-  difficulty: string;
+  difficulty?: string;
   cuisine: string;
   image: string;
-  mealType: string[];
+  mealType?: string[];
 };
 
 export const Card: React.FC<CardPropsT> = ({
@@ -110,7 +110,7 @@ export const Card: React.FC<CardPropsT> = ({
           <h4 className={styles.root__article_title}>{cuisine} кухня</h4>
         </article>
         <article className={styles.root__article}>
-          <h4 className={styles.root__article_title}>{mealType.join(", ")}</h4>
+          <h4 className={styles.root__article_title}>{mealType?.join(", ")}</h4>
         </article>
       </div>
     </section>

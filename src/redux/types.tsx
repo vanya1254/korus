@@ -1,20 +1,20 @@
 export type RecipeT = {
   id: number;
   name: string;
-  ingredients: string[];
+  ingredients?: string[];
   instructions: string[];
   prepTimeMinutes: number;
   cookTimeMinutes: number;
   servings: number;
-  difficulty: Difficulty;
+  difficulty?: Difficulty;
   cuisine: string;
   caloriesPerServing: number;
   tags: string[];
-  userId: number;
+  userId?: number;
   image: string;
-  rating: number;
-  reviewCount: number;
-  mealType: string[];
+  rating?: number;
+  reviewCount?: number;
+  mealType?: string[];
 };
 
 export enum Difficulty {

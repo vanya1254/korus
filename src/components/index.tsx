@@ -9,3 +9,4 @@ export { CustomSelect } from "./CustomSelect";
 export { CustomRadioBtn } from "./CustomRadioBtn";
 export { RadioBtns } from "./RadioBtns";
 export { CustomBtn } from "./CustomBtn";
+export { Slider } from "./Slider";

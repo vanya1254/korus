@@ -103,7 +103,7 @@
 }
 
 li.selected {
-  box-shadow: inset 0px 0px 0px 1px var(--Primary-6);
+  @include shadow(--Primary-6);
 
   a {
     color: var(--Primary-6);

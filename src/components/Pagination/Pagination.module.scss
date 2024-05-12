@@ -8,6 +8,8 @@
   padding: 12px 0;
 
   li {
+    @include shadow();
+
     display: flex;
     padding: 1px 0;
     flex-direction: column;
@@ -15,8 +17,7 @@
     gap: 10px;
 
     border-radius: 2px;
-    box-shadow: inset 0px 0px 0px 1px var(--Neutral-5);
-    background: var(--Neutral-1, #fff);
+    background: var(--Neutral-1);
     cursor: pointer;
 
     a {

@@ -1,2 +1,35 @@
+@import "../../scss/mixins";
+
 .root {
+  //   --swiper-navigation-sides-offset: calc(50% - 32px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 56px - var(--main-gap));
+
+  .swiper-wrapper {
+  }
+
+  &__navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    padding: 12px 0px;
+  }
+
+  &_btn {
+    @include shadow();
+
+    padding: 10px;
+    line-height: 0;
+
+    svg {
+      line-height: normal;
+    }
+  }
 }

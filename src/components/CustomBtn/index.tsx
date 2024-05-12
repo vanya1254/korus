@@ -2,23 +2,23 @@ import React from "react";
 
 import styles from "./CustomBtn.module.scss";
 
-type CustomBtnPropsT = {
+interface CustomBtnPropsT {
   className?: string;
   isDisabled: boolean;
-  text: string;
-};
+  children: JSX.Element | React.ReactNode | string;
+}
 
 export const CustomBtn: React.FC<CustomBtnPropsT> = ({
   className,
   isDisabled,
-  text,
+  children,
 }) => {
   return (
     <button
       className={`${styles.root} ${className ? className : ""}`}
       disabled={isDisabled}
     >
-      {text}
+      {children}
     </button>
   );
 };

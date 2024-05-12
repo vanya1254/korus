@@ -1,4 +1,3 @@
-import { CustomBtn } from "./CustomBtn/index";
 export { Header } from "./Header";
 export { Card } from "./Card";
 export { Pagination } from "./Pagination";
@@ -10,3 +9,4 @@ export { CustomRadioBtn } from "./CustomRadioBtn";
 export { RadioBtns } from "./RadioBtns";
 export { CustomBtn } from "./CustomBtn";
 export { Slider } from "./Slider";
+export { Timeline } from "./Timeline";

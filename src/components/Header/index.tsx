@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./Header.module.scss";
 
@@ -8,10 +9,12 @@ type HeaderPropsT = {
 };
 
 export const Header: React.FC<HeaderPropsT> = ({ title, hasBackBtn }) => {
+  const navigate = useNavigate();
+
   return (
     <header className={styles.root}>
       {hasBackBtn ? (
-        <button className={styles.root_btn}>
+        <button onClick={() => navigate(-1)} className={styles.root_btn}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="17"

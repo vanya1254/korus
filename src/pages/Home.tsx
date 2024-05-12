@@ -4,11 +4,11 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import { recipesSelector } from "../redux/slices/recipes/selectors";
 import { filtersSelector } from "../redux/slices/filters/selectors";
-import { fetchRecipes } from "../redux/slices/recipes/slice";
+import { fetchRecipes, setRecipes } from "../redux/slices/recipes/slice";
 import { fetchFiltersFields, setFilters } from "../redux/slices/filters/slice";
 
 import getFilters from "../utils/getFilters";
-import { LIMIT } from "../constants";
+import { LIMIT, PARAMS } from "../constants";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
@@ -22,7 +22,54 @@ const Home: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const isFirstLoading = useRef(true);
   const [curRecipes, setCurRecipes] = useState<RecipeT[]>([]);
-  const [curIndexRecipe, setCurIndexRecipe] = useState(0);
+  const [curPage, setCurPage] = useState(0);
+
+  const updateQS = (name: string, value: string) => {
+    setSearchParams((prevParams) => {
+      prevParams.delete(name);
+      prevParams.append(name, value);
+      return prevParams;
+    });
+  };
+
+  const setFilteredRecipes = () => {
+    const filters = searchParams
+      .toString()
+      .split("&")
+      .map((str) => {
+        const f = str.trim().split("=");
+        return { name: f[0], value: f[1] };
+      });
+
+    const params = {};
+
+    filters.forEach((filter) => {
+      if (filter.name === "difficulty" || filter.name === "cuisine") {
+        //@ts-ignore
+        params[filter.name] = filter.value;
+      }
+      // if (filter.name === "page") {
+      //   setCurPage(Number(filter.value));
+      // }
+    });
+
+    console.log(params);
+    console.log(searchParams.toString());
+
+    const filteredRecipes: RecipeT[] = recipes.filter(function (recipe) {
+      return Object.keys(params).every(function (a) {
+        //@ts-ignore
+        return Object.values(params).includes(recipe[a]);
+      });
+    });
+
+    console.log(filteredRecipes);
+    console.log(Object.keys(params), Object.values(params));
+
+    dispatch(setRecipes(filteredRecipes));
+  };
+
+  const getCurrentRecipes = () => {};
 
   useEffect(() => {
     if (isFirstLoading.current) {
@@ -39,27 +86,22 @@ const Home: React.FC = () => {
       ) {
         const converted = getFilters(filtersState.filtersFields);
         dispatch(setFilters(converted));
-        setCurRecipes(
-          recipes.slice(
-            curIndexRecipe,
-            Number(searchParams.get("page") || 1) * LIMIT
-          )
-        );
+        setCurRecipes(recipes.slice(curPage * LIMIT, LIMIT));
 
         isFirstLoading.current = false;
       }
     }
   }, [filtersState.status, status]);
 
-  // useEffect(() => {}, [searchParams]);
+  useEffect(() => {
+    if (!isFirstLoading.current) {
+      setFilteredRecipes();
 
-  const updateQS = (name: string, value: string) => {
-    setSearchParams((prevParams) => {
-      prevParams.delete(name);
-      prevParams.append(name, value);
-      return prevParams;
-    });
-  };
+      setCurRecipes((prev) => {
+        return recipes.slice(curPage * LIMIT, curPage * LIMIT + LIMIT);
+      });
+    }
+  }, [searchParams]);
 
   return (
     <>
@@ -104,7 +146,11 @@ const Home: React.FC = () => {
           ) : (
             "LOADING"
           )}
-          <Pagination />
+          <Pagination
+            // curPage={curPage}
+            pages={Math.ceil(recipes.length / LIMIT)}
+            updateParams={updateQS}
+          />
         </ContentLayout>
       </MainLayout>
     </>

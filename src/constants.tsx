@@ -23,4 +23,13 @@ export const selects = {
   ],
 };
 
+export const FILTERS = ["difficulty", "cuisine", "mealType"];
+
+export const PARAMS = {
+  page: "",
+  cuisine: "",
+  mealType: "",
+  difficulty: "",
+};
+
 export const LIMIT = 6;

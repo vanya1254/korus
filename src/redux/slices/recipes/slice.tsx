@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RecipesState } from "./types";
 import { RecipeT, Status } from "../../types";
+import { setFilters } from "../filters/slice";
 
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
@@ -28,7 +29,11 @@ const initialState: RecipesState = {
 export const recipesSlice = createSlice({
   name: "recipes",
   initialState,
-  reducers: {},
+  reducers: {
+    setRecipes: (state, action: PayloadAction<RecipeT[]>) => {
+      state.recipes = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchRecipes.pending, (state) => {
@@ -49,6 +54,6 @@ export const recipesSlice = createSlice({
   },
 });
 
-export const {} = recipesSlice.actions;
+export const { setRecipes } = recipesSlice.actions;
 
 export default recipesSlice.reducer;

@@ -3,8 +3,21 @@ import ReactPaginate from "react-paginate";
 
 import styles from "./Pagination.module.scss";
 
-export const Pagination: React.FC = () => {
-  const onClickPage = () => {};
+type PaginationPropsT = {
+  pages: number;
+  // curPage: number;
+  updateParams: (name: string, value: string) => void;
+};
+
+export const Pagination: React.FC<PaginationPropsT> = ({
+  pages,
+  // curPage,
+  updateParams,
+}) => {
+  const onClickPage = (index: { selected: number }) => {
+    const page = index.selected + 1;
+    updateParams("page", page.toString());
+  };
 
   return (
     <ReactPaginate
@@ -27,7 +40,8 @@ export const Pagination: React.FC = () => {
       }
       onPageChange={onClickPage}
       pageRangeDisplayed={5}
-      pageCount={10}
+      pageCount={pages}
+      // forcePage={curPage}
       previousLabel={
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +58,6 @@ export const Pagination: React.FC = () => {
           />
         </svg>
       }
-      renderOnZeroPageCount={null}
     />
   );
 };

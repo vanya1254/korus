@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 
-import styles from "./CustomSelect.module.scss";
+import { OptionT } from "../../redux/types";
 
-export type OptionT = {
-  name: string;
-  value: string;
-};
+import styles from "./CustomSelect.module.scss";
 
 type CustomSelectPropsT = {
   className?: string;
   htmlName: string;
   htmlId: string;
   options: OptionT[];
+  onChange: (option: OptionT, htmlName: string) => void;
 };
 
 export const CustomSelect: React.FC<CustomSelectPropsT> = ({
@@ -19,6 +17,7 @@ export const CustomSelect: React.FC<CustomSelectPropsT> = ({
   htmlName,
   htmlId,
   options,
+  onChange,
 }) => {
   const [selected, setSelected] = useState<OptionT>(options[0]);
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +33,7 @@ export const CustomSelect: React.FC<CustomSelectPropsT> = ({
   const onClickOption = (opt: OptionT) => {
     setSelected(opt);
     setIsOpen(false);
+    onChange(opt, htmlName);
   };
 
   return (

@@ -1,46 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAppSelector } from "../../redux/hooks";
 
 import { CustomSelect, RadioBtns } from "..";
 
-import { selects } from "../../constants";
+import { filtersSelector } from "../../redux/slices/filters/selectors";
+
+import { FILTERS, FILTERS_LABELS, selects } from "../../constants";
+import { OptionT, Status } from "../../redux/types";
 
 import styles from "./Filters.module.scss";
+import { FiltersT } from "../../redux/slices/filters/types";
 
-export const Filters: React.FC = () => {
+type FiltersPropsT = {
+  onChangeFilter: (option: OptionT, htmlName: string) => void;
+};
+
+export const Filters: React.FC<FiltersPropsT> = ({ onChangeFilter }) => {
+  const { status, filters } = useAppSelector(filtersSelector);
+
+  const getOptions = (filter: FiltersT) => {
+    const options = filter.value.map((val) => {
+      return { name: val, value: val };
+    });
+    options.unshift({
+      //@ts-ignore
+      name: FILTERS_LABELS[filter.name].option,
+      value: "",
+    });
+
+    return options;
+  };
+
   return (
     <form className={styles.root}>
-      <div className={styles.root__select}>
-        <label className={styles.root_label} htmlFor="cuisine">
-          Кухня:
-        </label>
-        <CustomSelect
-          className={styles.root_options}
-          htmlId="cuisine"
-          htmlName="cuisine"
-          options={selects.cuisines}
-        />
-      </div>
-      <div className={styles.root__select}>
-        <label className={styles.root_label} htmlFor="cuisine">
-          Тип блюда:
-        </label>
-        <CustomSelect
-          className={styles.root_options}
-          htmlId="mealType"
-          htmlName="mealType"
-          options={selects.mealTypes}
-        />
-      </div>
-      <fieldset className={styles.root__select}>
-        <label className={styles.root_label} htmlFor="difficulty">
-          Сложность приготовления:
-        </label>
-        <RadioBtns
-          className={styles.root_options}
-          htmlName="difficulty"
-          group={selects.difficulties}
-        />
-      </fieldset>
+      {status === Status.Fulfilled
+        ? filters.map((filter, i) =>
+            filter.name === "difficulty" ? (
+              <fieldset key={i} className={styles.root__select}>
+                <label className={styles.root_label} htmlFor={filter.name}>
+                  {
+                    //@ts-ignore
+                    FILTERS_LABELS[filter.name].label
+                  }
+                </label>
+                <RadioBtns
+                  className={styles.root_options}
+                  htmlName={filter.name}
+                  group={getOptions(filter)}
+                />
+              </fieldset>
+            ) : (
+              <div key={i} className={styles.root__select}>
+                <label className={styles.root_label} htmlFor={filter.name}>
+                  {
+                    //@ts-ignore
+                    FILTERS_LABELS[filter.name].label
+                  }
+                </label>
+                <CustomSelect
+                  className={styles.root_options}
+                  htmlId={filter.name}
+                  htmlName={filter.name}
+                  options={getOptions(filter)}
+                  onChange={onChangeFilter}
+                />
+              </div>
+            )
+          )
+        : "LOADING"}
       <button
         className={styles.root_reset}
         onClick={(e) => e.preventDefault()}

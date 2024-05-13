@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 
 import styles from "./Pagination.module.scss";
 import { useAppSelector } from "../../redux/hooks";
-import { recipesSelector } from "../../redux/slices/recipes/selectors";
+import { curPageSelector } from "../../redux/slices/recipes/selectors";
 
 type PaginationPropsT = {
   pages: number;
@@ -14,11 +14,10 @@ export const Pagination: React.FC<PaginationPropsT> = ({
   pages,
   updateParams,
 }) => {
-  const { curPage } = useAppSelector(recipesSelector);
+  const curPage = useAppSelector(curPageSelector);
 
   const onClickPage = (index: { selected: number }) => {
     const page = index.selected + 1;
-    console.log(index.selected, page);
     updateParams("page", page.toString());
   };
 

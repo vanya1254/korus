@@ -11,18 +11,39 @@ import {
 } from "../redux/slices/recipes/slice";
 import { fetchFiltersFields } from "../redux/slices/filters/slice";
 
-import { LIMIT, PARAMS } from "../constants";
-
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
 
-import { RecipeT, Status } from "../redux/types";
+import { FILTERS, LIMIT, PARAMS } from "../constants";
+import { OptionT, RecipeT, Status } from "../redux/types";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const { status, recipes, curRecipes } = useAppSelector(recipesSelector);
   const [searchParams, setSearchParams] = useSearchParams();
   const isFirstLoading = useRef(true);
+
+  const [activefilters, setActiveFilters] = useState<OptionT[]>(FILTERS);
+
+  const onChangeFilter = (option: OptionT, htmlName: string) => {
+    setActiveFilters((prev) => {
+      const newFilters = [
+        ...prev.map((filter) => {
+          if (filter.name === htmlName) {
+            return { ...filter, value: option.value };
+          }
+          return { ...filter };
+        }),
+      ];
+      return [...newFilters];
+    });
+
+    activefilters.forEach((filter) => {
+      if (filter.value) {
+        updateQS(filter.name, filter.value);
+      }
+    });
+  };
 
   const updateQS = (name: string, value: string) => {
     setSearchParams((prevParams) => {
@@ -84,7 +105,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     setFilteredRecipes();
 
-    const page = Number(searchParams.get("page")) || 1 - 1;
+    const page = (Number(searchParams.get("page")) || 1) - 1;
 
     dispatch(setCurPage(page));
     dispatch(setCurRecipes());
@@ -121,7 +142,7 @@ const Home: React.FC = () => {
               </p>
             </div>
           </div>
-          <Filters />
+          <Filters onChangeFilter={onChangeFilter} />
           <Additional />
         </AsideLayout>
         <ContentLayout

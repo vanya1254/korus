@@ -28,3 +28,8 @@ export enum Status {
   Fulfilled = "FULFILLED",
   Rejected = "REJECTED",
 }
+
+export type OptionT = {
+  name: string;
+  value: string;
+};

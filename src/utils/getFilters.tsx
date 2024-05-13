@@ -2,9 +2,9 @@ import { FiltersFieldsT, FiltersT } from "../redux/slices/filters/types";
 
 const getFilters = (arr: FiltersFieldsT[]): FiltersT[] => {
   const filters = [
-    { name: "difficulty", value: ["Easy"] },
     { name: "cuisine", value: ["Italian"] },
     { name: "mealType", value: ["Dinner"] },
+    { name: "difficulty", value: ["Easy"] },
   ];
 
   filters.forEach((filter) => {

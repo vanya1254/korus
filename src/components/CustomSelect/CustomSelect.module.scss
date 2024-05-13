@@ -35,6 +35,8 @@
 
     position: absolute;
     z-index: 4;
+    overflow: auto;
+    max-height: 100px;
 
     border-radius: 2px;
     background: var(--Conditional-pop-over);

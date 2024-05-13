@@ -23,7 +23,22 @@ export const selects = {
   ],
 };
 
-export const FILTERS = ["difficulty", "cuisine", "mealType"];
+export const FILTERS_NAMES = ["difficulty", "cuisine", "mealType"];
+
+export const FILTERS_LABELS = {
+  cuisine: { label: "Кухня:", option: "Все страны и регионы" },
+  mealType: { label: "Тип блюда:", option: "Все типы" },
+  difficulty: {
+    label: "Сложность приготовления:",
+    option: "Любая",
+  },
+};
+
+export const FILTERS = [
+  { name: "difficulty", value: "" },
+  { name: "cuisine", value: "" },
+  { name: "mealType", value: "" },
+];
 
 export const PARAMS = {
   page: "",

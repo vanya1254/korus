@@ -1,6 +1,7 @@
 import React from "react";
-import { CustomRadioBtn } from "../CustomRadioBtn";
-import { OptionT } from "../CustomSelect";
+
+import { CustomRadioBtn } from "..";
+import { OptionT } from "../../redux/types";
 
 import styles from "./RadioBtns.module.scss";
 

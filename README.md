@@ -12,3 +12,4 @@
 - react-router-dom
 - sass
 - swiper
+- typescript

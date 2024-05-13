@@ -3,11 +3,14 @@ import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import { recipesSelector } from "../redux/slices/recipes/selectors";
-import { filtersSelector } from "../redux/slices/filters/selectors";
-import { fetchRecipes, setRecipes } from "../redux/slices/recipes/slice";
-import { fetchFiltersFields, setFilters } from "../redux/slices/filters/slice";
+import {
+  fetchRecipes,
+  setCurPage,
+  setCurRecipes,
+  setRecipes,
+} from "../redux/slices/recipes/slice";
+import { fetchFiltersFields } from "../redux/slices/filters/slice";
 
-import getFilters from "../utils/getFilters";
 import { LIMIT, PARAMS } from "../constants";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
@@ -17,12 +20,9 @@ import { RecipeT, Status } from "../redux/types";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const filtersState = useAppSelector(filtersSelector);
-  const { status, recipes } = useAppSelector(recipesSelector);
+  const { status, recipes, curRecipes } = useAppSelector(recipesSelector);
   const [searchParams, setSearchParams] = useSearchParams();
   const isFirstLoading = useRef(true);
-  const [curRecipes, setCurRecipes] = useState<RecipeT[]>([]);
-  const [curPage, setCurPage] = useState(0);
 
   const updateQS = (name: string, value: string) => {
     setSearchParams((prevParams) => {
@@ -32,75 +32,62 @@ const Home: React.FC = () => {
     });
   };
 
-  const setFilteredRecipes = () => {
-    const filters = searchParams
-      .toString()
-      .split("&")
-      .map((str) => {
-        const f = str.trim().split("=");
-        return { name: f[0], value: f[1] };
-      });
+  // const setFilteredRecipes = () => {
+  //   const filters = searchParams
+  //     .toString()
+  //     .split("&")
+  //     .map((str) => {
+  //       const f = str.trim().split("=");
+  //       return { name: f[0], value: f[1] };
+  //     });
 
-    const params = {};
+  //   const params = {};
 
-    filters.forEach((filter) => {
-      if (filter.name === "difficulty" || filter.name === "cuisine") {
-        //@ts-ignore
-        params[filter.name] = filter.value;
-      }
-      // if (filter.name === "page") {
-      //   setCurPage(Number(filter.value));
-      // }
-    });
+  //   filters.forEach((filter) => {
+  //     if (filter.name === "difficulty" || filter.name === "cuisine") {
+  //       //@ts-ignore
+  //       params[filter.name] = filter.value;
+  //     }
+  //     if (filter.name === "page") {
+  //       setCurPage(Number(filter.value));
+  //       console.log(curPage);
+  //     }
+  //   });
 
-    console.log(params);
-    console.log(searchParams.toString());
+  //   console.log(params);
+  //   console.log(searchParams.toString());
 
-    const filteredRecipes: RecipeT[] = recipes.filter(function (recipe) {
-      return Object.keys(params).every(function (a) {
-        //@ts-ignore
-        return Object.values(params).includes(recipe[a]);
-      });
-    });
+  //   const filteredRecipes: RecipeT[] = recipes.filter(function (recipe) {
+  //     return Object.keys(params).every(function (a) {
+  //       //@ts-ignore
+  //       return Object.values(params).includes(recipe[a]);
+  //     });
+  //   });
 
-    console.log(filteredRecipes);
-    console.log(Object.keys(params), Object.values(params));
+  //   console.log(filteredRecipes);
+  //   console.log(Object.keys(params), Object.values(params));
 
-    dispatch(setRecipes(filteredRecipes));
-  };
+  //   dispatch(setRecipes(filteredRecipes));
+  // };
 
-  const getCurrentRecipes = () => {};
+  const setFilteredRecipes = () => {};
 
   useEffect(() => {
     if (isFirstLoading.current) {
       dispatch(fetchFiltersFields());
       dispatch(fetchRecipes());
+
+      isFirstLoading.current = false;
     }
   }, []);
 
   useEffect(() => {
-    if (isFirstLoading.current) {
-      if (
-        filtersState.status === Status.Fulfilled &&
-        status === Status.Fulfilled
-      ) {
-        const converted = getFilters(filtersState.filtersFields);
-        dispatch(setFilters(converted));
-        setCurRecipes(recipes.slice(curPage * LIMIT, LIMIT));
+    setFilteredRecipes();
 
-        isFirstLoading.current = false;
-      }
-    }
-  }, [filtersState.status, status]);
+    const page = Number(searchParams.get("page")) || 1 - 1;
 
-  useEffect(() => {
-    if (!isFirstLoading.current) {
-      setFilteredRecipes();
-
-      setCurRecipes((prev) => {
-        return recipes.slice(curPage * LIMIT, curPage * LIMIT + LIMIT);
-      });
-    }
+    dispatch(setCurPage(page));
+    dispatch(setCurRecipes());
   }, [searchParams]);
 
   return (
@@ -147,7 +134,6 @@ const Home: React.FC = () => {
             "LOADING"
           )}
           <Pagination
-            // curPage={curPage}
             pages={Math.ceil(recipes.length / LIMIT)}
             updateParams={updateQS}
           />

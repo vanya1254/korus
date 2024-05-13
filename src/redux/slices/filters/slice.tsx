@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { FiltersFieldsT, FiltersState, FiltersT } from "./types";
 import { Status } from "../../types";
+import getFilters from "../../../utils/getFilters";
 
 export const fetchFiltersFields = createAsyncThunk(
   "filters/fetchFiltersFields",
@@ -45,6 +46,7 @@ export const filtersSlice = createSlice({
         (state, action: PayloadAction<FiltersFieldsT[]>) => {
           state.status = Status.Fulfilled;
           state.filtersFields = action.payload;
+          state.filters = getFilters(action.payload);
         }
       )
       .addCase(fetchFiltersFields.rejected, (state) => {

@@ -2,20 +2,23 @@ import React from "react";
 import ReactPaginate from "react-paginate";
 
 import styles from "./Pagination.module.scss";
+import { useAppSelector } from "../../redux/hooks";
+import { recipesSelector } from "../../redux/slices/recipes/selectors";
 
 type PaginationPropsT = {
   pages: number;
-  // curPage: number;
   updateParams: (name: string, value: string) => void;
 };
 
 export const Pagination: React.FC<PaginationPropsT> = ({
   pages,
-  // curPage,
   updateParams,
 }) => {
+  const { curPage } = useAppSelector(recipesSelector);
+
   const onClickPage = (index: { selected: number }) => {
     const page = index.selected + 1;
+    console.log(index.selected, page);
     updateParams("page", page.toString());
   };
 
@@ -41,7 +44,7 @@ export const Pagination: React.FC<PaginationPropsT> = ({
       onPageChange={onClickPage}
       pageRangeDisplayed={5}
       pageCount={pages}
-      // forcePage={curPage}
+      forcePage={curPage}
       previousLabel={
         <svg
           xmlns="http://www.w3.org/2000/svg"

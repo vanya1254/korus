@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RecipesState } from "./types";
 import { RecipeT, Status } from "../../types";
-import { setFilters } from "../filters/slice";
+import { LIMIT } from "../../../constants";
 
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
@@ -23,6 +23,8 @@ export const fetchRecipes = createAsyncThunk(
 
 const initialState: RecipesState = {
   recipes: [],
+  curRecipes: [],
+  curPage: 0,
   status: Status.Pending,
 };
 
@@ -32,6 +34,15 @@ export const recipesSlice = createSlice({
   reducers: {
     setRecipes: (state, action: PayloadAction<RecipeT[]>) => {
       state.recipes = action.payload;
+    },
+    setCurRecipes: (state) => {
+      state.curRecipes = state.recipes.slice(
+        state.curPage * LIMIT,
+        state.curPage * LIMIT + LIMIT
+      );
+    },
+    setCurPage: (state, action: PayloadAction<number>) => {
+      state.curPage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -45,6 +56,10 @@ export const recipesSlice = createSlice({
         (state, action: PayloadAction<RecipeT[]>) => {
           state.status = Status.Fulfilled;
           state.recipes = action.payload;
+          state.curRecipes = action.payload.slice(
+            state.curPage * LIMIT,
+            state.curPage * LIMIT + LIMIT
+          );
         }
       )
       .addCase(fetchRecipes.rejected, (state) => {
@@ -54,6 +69,6 @@ export const recipesSlice = createSlice({
   },
 });
 
-export const { setRecipes } = recipesSlice.actions;
+export const { setRecipes, setCurRecipes, setCurPage } = recipesSlice.actions;
 
 export default recipesSlice.reducer;

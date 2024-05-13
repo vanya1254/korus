@@ -9,7 +9,8 @@ type CustomSelectPropsT = {
   htmlName: string;
   htmlId: string;
   options: OptionT[];
-  onChange: (option: OptionT, htmlName: string) => void;
+  pushQS: (name: string, value: string) => void;
+  deleteQS: (name: string) => void;
 };
 
 export const CustomSelect: React.FC<CustomSelectPropsT> = ({
@@ -17,7 +18,8 @@ export const CustomSelect: React.FC<CustomSelectPropsT> = ({
   htmlName,
   htmlId,
   options,
-  onChange,
+  pushQS,
+  deleteQS,
 }) => {
   const [selected, setSelected] = useState<OptionT>(options[0]);
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +35,12 @@ export const CustomSelect: React.FC<CustomSelectPropsT> = ({
   const onClickOption = (opt: OptionT) => {
     setSelected(opt);
     setIsOpen(false);
-    onChange(opt, htmlName);
+
+    if (opt.value) {
+      pushQS(htmlName, opt.value);
+    } else {
+      deleteQS(htmlName);
+    }
   };
 
   return (

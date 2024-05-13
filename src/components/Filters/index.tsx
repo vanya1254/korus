@@ -12,21 +12,22 @@ import styles from "./Filters.module.scss";
 import { FiltersT } from "../../redux/slices/filters/types";
 
 type FiltersPropsT = {
-  onChangeFilter: (option: OptionT, htmlName: string) => void;
+  pushQS: (name: string, value: string) => void;
+  deleteQS: (name: string) => void;
 };
 
-export const Filters: React.FC<FiltersPropsT> = ({ onChangeFilter }) => {
+export const Filters: React.FC<FiltersPropsT> = ({ pushQS, deleteQS }) => {
   const { status, filters } = useAppSelector(filtersSelector);
 
   const getOptions = (filter: FiltersT) => {
     const options = filter.value.map((val) => {
       return { name: val, value: val };
     });
-    options.unshift({
+    options[0] = {
       //@ts-ignore
       name: FILTERS_LABELS[filter.name].option,
       value: "",
-    });
+    };
 
     return options;
   };
@@ -62,7 +63,8 @@ export const Filters: React.FC<FiltersPropsT> = ({ onChangeFilter }) => {
                   htmlId={filter.name}
                   htmlName={filter.name}
                   options={getOptions(filter)}
-                  onChange={onChangeFilter}
+                  pushQS={pushQS}
+                  deleteQS={deleteQS}
                 />
               </div>
             )

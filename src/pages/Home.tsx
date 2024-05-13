@@ -10,45 +10,32 @@ import {
   setRecipes,
 } from "../redux/slices/recipes/slice";
 import { fetchFiltersFields } from "../redux/slices/filters/slice";
+import { filtersSelector } from "../redux/slices/filters/selectors";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
 
-import { FILTERS, LIMIT, PARAMS } from "../constants";
+import { ACTIVE_FILTERS, LIMIT } from "../constants";
 import { OptionT, RecipeT, Status } from "../redux/types";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const { status, recipes, curRecipes } = useAppSelector(recipesSelector);
+  const { filters } = useAppSelector(filtersSelector);
   const [searchParams, setSearchParams] = useSearchParams();
   const isFirstLoading = useRef(true);
-
-  const [activefilters, setActiveFilters] = useState<OptionT[]>(FILTERS);
-
-  const onChangeFilter = (option: OptionT, htmlName: string) => {
-    setActiveFilters((prev) => {
-      const newFilters = [
-        ...prev.map((filter) => {
-          if (filter.name === htmlName) {
-            return { ...filter, value: option.value };
-          }
-          return { ...filter };
-        }),
-      ];
-      return [...newFilters];
-    });
-
-    activefilters.forEach((filter) => {
-      if (filter.value) {
-        updateQS(filter.name, filter.value);
-      }
-    });
-  };
 
   const updateQS = (name: string, value: string) => {
     setSearchParams((prevParams) => {
       prevParams.delete(name);
       prevParams.append(name, value);
+      return prevParams;
+    });
+  };
+
+  const deleteQS = (name: string) => {
+    setSearchParams((prevParams) => {
+      prevParams.delete(name);
       return prevParams;
     });
   };
@@ -71,7 +58,6 @@ const Home: React.FC = () => {
   //     }
   //     if (filter.name === "page") {
   //       setCurPage(Number(filter.value));
-  //       console.log(curPage);
   //     }
   //   });
 
@@ -142,7 +128,7 @@ const Home: React.FC = () => {
               </p>
             </div>
           </div>
-          <Filters onChangeFilter={onChangeFilter} />
+          <Filters pushQS={updateQS} deleteQS={deleteQS} />
           <Additional />
         </AsideLayout>
         <ContentLayout

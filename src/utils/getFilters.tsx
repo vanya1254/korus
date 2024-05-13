@@ -1,11 +1,8 @@
+import { FILTERS } from "../constants";
 import { FiltersFieldsT, FiltersT } from "../redux/slices/filters/types";
 
 const getFilters = (arr: FiltersFieldsT[]): FiltersT[] => {
-  const filters = [
-    { name: "cuisine", value: ["Italian"] },
-    { name: "mealType", value: ["Dinner"] },
-    { name: "difficulty", value: ["Easy"] },
-  ];
+  const filters = FILTERS.map((f) => ({ ...f }));
 
   filters.forEach((filter) => {
     arr.forEach((obj) => {
@@ -23,34 +20,6 @@ const getFilters = (arr: FiltersFieldsT[]): FiltersT[] => {
   });
 
   return filters;
-};
-
-const getFilterss = (arr: FiltersFieldsT[]): FiltersT[] => {
-  const filters = {
-    cuisine: [{ name: "Все страны и регионы", value: "" }],
-    mealType: [{ name: "Все типы", value: "" }],
-    difficulty: [{ name: "Любая", value: "" }],
-  };
-
-  arr.forEach((obj) => {
-    for (const [key, val] of Object.entries(obj)) {
-      if (key !== "id") {
-        if (Array.isArray(val)) {
-          // @ts-ignore
-          filters[key].push(
-            ...val.map((item) => ({ name: item, value: item }))
-          );
-        } else {
-          // @ts-ignore
-          filters[key].push({ name: val, value: val });
-        }
-      }
-    }
-  });
-
-  console.log(filters);
-
-  return [];
 };
 
 export default getFilters;

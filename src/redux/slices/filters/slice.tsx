@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { FiltersFieldsT, FiltersState, FiltersT } from "./types";
-import { Status } from "../../types";
+import { Status, OptionT } from "../../types";
 import getFilters from "../../../utils/getFilters";
 
 export const fetchFiltersFields = createAsyncThunk(
@@ -34,6 +34,14 @@ export const filtersSlice = createSlice({
     setFilters: (state, action: PayloadAction<FiltersT[]>) => {
       state.filters = action.payload;
     },
+    setActiveValue: (state, action: PayloadAction<OptionT>) => {
+      state.filters = state.filters.map((filter) => {
+        if (filter.name === action.payload.name) {
+          filter.activeValue = action.payload.value;
+        }
+        return filter;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -56,6 +64,6 @@ export const filtersSlice = createSlice({
   },
 });
 
-export const { setFilters } = filtersSlice.actions;
+export const { setFilters, setActiveValue } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

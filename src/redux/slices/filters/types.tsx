@@ -16,4 +16,5 @@ export type FiltersFieldsT = {
 export type FiltersT = {
   name: string;
   value: string[];
+  activeValue: string;
 };

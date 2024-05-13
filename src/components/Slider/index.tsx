@@ -20,17 +20,6 @@ type SliderPropsT = {
 export const Slider: React.FC<SliderPropsT> = ({ imgs }) => {
   const swiperRef = useRef<SwiperType>();
 
-  const onClickPrev = () => {
-    swiperRef.current?.slidePrev();
-    console.log(111);
-  };
-
-  const onClickNext = () => {
-    swiperRef.current?.slideNext();
-
-    console.log(111);
-  };
-
   return (
     <>
       <Swiper

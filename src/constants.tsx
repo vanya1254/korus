@@ -34,7 +34,7 @@ export const FILTERS_LABELS = {
   },
 };
 
-export const FILTERS = [
+export const ACTIVE_FILTERS = [
   { name: "difficulty", value: "" },
   { name: "cuisine", value: "" },
   { name: "mealType", value: "" },
@@ -48,3 +48,9 @@ export const PARAMS = {
 };
 
 export const LIMIT = 6;
+
+export const FILTERS = [
+  { name: "cuisine", value: [""], activeValue: "" },
+  { name: "mealType", value: [""], activeValue: "" },
+  { name: "difficulty", value: [""], activeValue: "" },
+];

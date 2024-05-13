@@ -56,12 +56,13 @@
 }
 
 .recipe-grid {
+  height: calc(100vh - 72px - (var(--main-padding) * 2)); // height of header
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
 
   @media (max-width: 1680px) {
     grid-template-columns: 1fr auto;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr auto;
     grid-auto-flow: column;
     height: auto;
   }
@@ -74,7 +75,7 @@
 
   @media (max-width: 780px) {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
   }
 }
 

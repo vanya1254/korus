@@ -5,6 +5,12 @@
   padding-right: 14px;
   gap: var(--main-gap);
 
+  height: calc(100vh - 72px - (var(--main-padding) * 2)); // height of header
+
+  @media (max-width: 1850px) {
+    height: auto;
+  }
+
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;

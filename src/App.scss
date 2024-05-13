@@ -56,9 +56,9 @@
 }
 
 .recipe-grid {
-  height: calc(100vh - 72px - (var(--main-padding) * 2)); // height of header
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
+  height: calc(100vh - 72px - (var(--main-padding) * 2)); // height of header
 
   @media (max-width: 1680px) {
     grid-template-columns: 1fr auto;

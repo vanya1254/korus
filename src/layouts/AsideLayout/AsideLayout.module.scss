@@ -5,4 +5,13 @@
 
   padding: 24px;
   background-color: var(--Neutral-1);
+
+  &__sticky {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+    position: sticky;
+    top: 24px;
+  }
 }

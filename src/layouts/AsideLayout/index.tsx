@@ -7,5 +7,9 @@ type AsideLayoutPropsT = {
 };
 
 export const AsideLayout: React.FC<AsideLayoutPropsT> = ({ children }) => {
-  return <aside className={styles.root}>{children}</aside>;
+  return (
+    <aside className={styles.root}>
+      <div className={styles.root__sticky}>{children}</div>
+    </aside>
+  );
 };

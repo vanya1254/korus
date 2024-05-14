@@ -56,7 +56,18 @@ const Home: React.FC = () => {
         //@ts-ignore
         if (Array.isArray(recipe[a])) {
           //@ts-ignore
-          return Object.values(params).includes(...recipe[a]);
+          for (let i = 0; i < recipe[a].length; i++) {
+            // да это нереальный кастом, но оно работает
+            //@ts-ignore
+            const type = recipe[a][i];
+            //@ts-ignore
+            if (i === recipe[a].length - 1) {
+              //@ts-ignore
+              return Object.values(params).includes(type);
+            } else if (Object.values(params).includes(type)) {
+              return Object.values(params).includes(type);
+            }
+          }
         }
         //@ts-ignore
         return Object.values(params).includes(recipe[a]);

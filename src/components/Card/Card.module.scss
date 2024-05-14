@@ -1,13 +1,13 @@
 @import "../../scss/variables";
+@import "../../scss/mixins";
 
 .root {
+  @include shadow();
+
   display: flex;
 
   width: 100%;
   border-radius: 2px;
-  box-shadow: inset 0px 0px 0px 1px var(--Neutral-5);
-  -webkit-box-shadow: inset 0px 0px 0px 1px var(--Neutral-5);
-  -moz-box-shadow: inset 0px 0px 0px 1px var(--Neutral-5);
   background-color: var(--Neutral-1);
 
   &__left {

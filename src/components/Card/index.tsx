@@ -26,7 +26,7 @@ export const Card: React.FC<CardPropsT> = ({
   const [stars, setStars] = useState<boolean[]>([false, false, false]);
 
   const updateStars = (): void => {
-    // @ts-ignore: Unreachable code error
+    // @ts-ignore
     setStars(difficultyConvert[difficulty.toLowerCase()]);
   };
 

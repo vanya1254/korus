@@ -14,9 +14,10 @@ export const Additional: React.FC = () => {
   const navigate = useNavigate();
 
   const onClickLucky = () => {
-    const rndId = getRandom(1, (filteredRecipes.length || recipes.length) - 1);
+    const curRecipes = filteredRecipes.length ? filteredRecipes : recipes;
+    const rndIdx = getRandom(0, curRecipes.length - 1);
 
-    navigate(`/recipes/${rndId}`);
+    navigate(`/recipes/${curRecipes[rndIdx].id}`);
   };
 
   return (

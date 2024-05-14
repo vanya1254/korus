@@ -23,7 +23,7 @@ import { RecipeT, Status } from "../redux/types";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { status, recipes, filteredRecipes, curRecipes, hasFiltered, curPage } =
+  const { status, recipes, curRecipes, recipesLength } =
     useAppSelector(recipesSelector);
   const { filters } = useAppSelector(filtersSelector);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -81,11 +81,7 @@ const Home: React.FC = () => {
         return Object.values(params).includes(recipe[a]);
       });
     });
-    // if (filtered.length) {
-    //   dispatch(setHasFiltered(true));
-    // } else {
-    //   dispatch(setHasFiltered(false));
-    // }
+
     dispatch(setFilteredRecipes(filtered));
   };
 
@@ -99,7 +95,9 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setFiltered();
+    if (!isFirstLoading.current) {
+      setFiltered();
+    }
 
     const page = (Number(searchParams.get("page")) || 1) - 1;
 
@@ -143,11 +141,7 @@ const Home: React.FC = () => {
         </AsideLayout>
         <ContentLayout
           title={"Найденные рецепты"}
-          count={
-            status === Status.Fulfilled
-              ? filteredRecipes.length || recipes.length
-              : 0
-          }
+          count={status === Status.Fulfilled ? recipesLength : 0}
         >
           {status === Status.Fulfilled ? (
             <Cards recipes={curRecipes} />
@@ -155,9 +149,7 @@ const Home: React.FC = () => {
             "LOADING"
           )}
           <Pagination
-            pages={Math.ceil(
-              (filteredRecipes.length || recipes.length) / LIMIT
-            )}
+            pages={Math.ceil(recipesLength / LIMIT)}
             updateParams={updateQS}
           />
         </ContentLayout>

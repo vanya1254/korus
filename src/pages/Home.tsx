@@ -9,7 +9,10 @@ import {
   setCurRecipes,
   setFilteredRecipes,
 } from "../redux/slices/recipes/slice";
-import { fetchFiltersFields } from "../redux/slices/filters/slice";
+import {
+  fetchFiltersFields,
+  resetFilters,
+} from "../redux/slices/filters/slice";
 import { filtersSelector } from "../redux/slices/filters/selectors";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
@@ -39,6 +42,11 @@ const Home: React.FC = () => {
       prevParams.delete(name);
       return prevParams;
     });
+  };
+
+  const clearQS = () => {
+    dispatch(resetFilters());
+    setSearchParams("");
   };
 
   const setFiltered = () => {
@@ -130,7 +138,7 @@ const Home: React.FC = () => {
               </p>
             </div>
           </div>
-          <Filters pushQS={updateQS} deleteQS={deleteQS} />
+          <Filters pushQS={updateQS} deleteQS={deleteQS} clearQS={clearQS} />
           <Additional />
         </AsideLayout>
         <ContentLayout

@@ -14,9 +14,14 @@ import styles from "./Filters.module.scss";
 type FiltersPropsT = {
   pushQS: (name: string, value: string) => void;
   deleteQS: (name: string) => void;
+  clearQS: () => void;
 };
 
-export const Filters: React.FC<FiltersPropsT> = ({ pushQS, deleteQS }) => {
+export const Filters: React.FC<FiltersPropsT> = ({
+  pushQS,
+  deleteQS,
+  clearQS,
+}) => {
   const { status, filters } = useAppSelector(filtersSelector);
 
   const getOptions = (filter: FiltersT) => {
@@ -74,8 +79,10 @@ export const Filters: React.FC<FiltersPropsT> = ({ pushQS, deleteQS }) => {
         : "LOADING"}
       <button
         className={styles.root_reset}
-        onClick={(e) => e.preventDefault()}
-        disabled
+        onClick={(e) => {
+          e.preventDefault();
+          clearQS();
+        }}
       >
         Сбросить фильтры
       </button>

@@ -14,8 +14,8 @@ type CardsPropsT = {
 export const Cards: React.FC<CardsPropsT> = ({ recipes }) => {
   return (
     <div className={styles.root}>
-      {recipes.map((recipe, i) => (
-        <Link key={i} to={`/recipes/${recipe.id}`}>
+      {recipes.map((recipe) => (
+        <Link key={recipe.id} to={`/recipes/${recipe.id}`}>
           <Card {...recipe} />
         </Link>
       ))}

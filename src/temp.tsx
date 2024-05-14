@@ -1,3 +1,5 @@
+export const d = [];
+
 // const setFilteredRecipes = () => {
 //   const filters = searchParams
 //     .toString()

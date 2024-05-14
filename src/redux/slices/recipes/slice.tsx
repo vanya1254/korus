@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RecipesState } from "./types";
 import { RecipeT, Status } from "../../types";
 import { LIMIT } from "../../../constants";
+import { stat } from "fs";
 
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
@@ -24,6 +25,7 @@ export const fetchRecipes = createAsyncThunk(
 const initialState: RecipesState = {
   recipes: [],
   filteredRecipes: [],
+  hasFiltered: false,
   curRecipes: [],
   curPage: 0,
   status: Status.Pending,
@@ -52,6 +54,9 @@ export const recipesSlice = createSlice({
     setCurPage: (state, action: PayloadAction<number>) => {
       state.curPage = action.payload;
     },
+    setHasFiltered: (state, action: PayloadAction<boolean>) => {
+      state.hasFiltered = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -77,7 +82,7 @@ export const recipesSlice = createSlice({
   },
 });
 
-export const { setFilteredRecipes, setCurRecipes, setCurPage } =
+export const { setFilteredRecipes, setCurRecipes, setCurPage, setHasFiltered } =
   recipesSlice.actions;
 
 export default recipesSlice.reducer;

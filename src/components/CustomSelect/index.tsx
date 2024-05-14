@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { OptionT } from "../../redux/types";
 
 import styles from "./CustomSelect.module.scss";
+import { useAppDispatch } from "../../redux/hooks";
+import { setActiveValue } from "../../redux/slices/filters/slice";
 
 type CustomSelectPropsT = {
   className?: string;
@@ -21,6 +23,7 @@ export const CustomSelect: React.FC<CustomSelectPropsT> = ({
   pushQS,
   deleteQS,
 }) => {
+  const dispatch = useAppDispatch();
   const [selected, setSelected] = useState<OptionT>(options[0]);
   const [isOpen, setIsOpen] = useState(false);
   const STYLES = {
@@ -38,12 +41,13 @@ export const CustomSelect: React.FC<CustomSelectPropsT> = ({
 
     if (opt.value) {
       pushQS(htmlName, opt.value);
+      dispatch(setActiveValue({ name: htmlName, value: opt.value }));
     } else {
       deleteQS(htmlName);
+      dispatch(setActiveValue({ name: htmlName, value: "" }));
     }
+    pushQS("page", "1");
   };
-
-  useEffect(() => {}, [selected]);
 
   return (
     <div className={`${styles.root} ${className ? className : ""}`}>

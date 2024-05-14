@@ -8,6 +8,7 @@ import {
   setCurPage,
   setCurRecipes,
   setFilteredRecipes,
+  setHasFiltered,
 } from "../redux/slices/recipes/slice";
 import {
   fetchFiltersFields,
@@ -23,7 +24,7 @@ import { OptionT, RecipeT, Status } from "../redux/types";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { status, recipes, filteredRecipes, curRecipes, curPage } =
+  const { status, recipes, filteredRecipes, curRecipes, hasFiltered, curPage } =
     useAppSelector(recipesSelector);
   const { filters } = useAppSelector(filtersSelector);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,60 +45,6 @@ const Home: React.FC = () => {
     });
   };
 
-  // const setFilteredRecipes = () => {
-  //   const filters = searchParams
-  //     .toString()
-  //     .split("&")
-  //     .map((str) => {
-  //       const f = str.trim().split("=");
-  //       return { name: f[0], value: f[1] };
-  //     });
-
-  //   const params = {};
-
-  //   filters.forEach((filter) => {
-  //     if (filter.name === "difficulty" || filter.name === "cuisine") {
-  //       //@ts-ignore
-  //       params[filter.name] = filter.value;
-  //     }
-  //     if (filter.name === "page") {
-  //       setCurPage(Number(filter.value));
-  //     }
-  //   });
-
-  //   console.log(params);
-  //   console.log(searchParams.toString());
-
-  //   const filteredRecipes: RecipeT[] = recipes.filter(function (recipe) {
-  //     return Object.keys(params).every(function (a) {
-  //       //@ts-ignore
-  //       return Object.values(params).includes(recipe[a]);
-  //     });
-  //   });
-
-  //   console.log(filteredRecipes);
-  //   console.log(Object.keys(params), Object.values(params));
-
-  //   dispatch(setRecipes(filteredRecipes));
-  // };
-
-  const setFilters = () => {
-    // let onChangeFilters = false;
-
-    FILTERS_NAMES.forEach((name) => {
-      const value = searchParams.get(name);
-      if (value) {
-        dispatch(setActiveValue({ name, value }));
-      } else {
-        dispatch(setActiveValue({ name, value: "" }));
-      }
-      // onChangeFilters = true;
-    });
-
-    // return onChangeFilters;
-    console.log(filters);
-  };
-
   const setFiltered = () => {
     const params = {};
 
@@ -111,10 +58,19 @@ const Home: React.FC = () => {
     const filtered: RecipeT[] = recipes.filter(function (recipe) {
       return Object.keys(params).every(function (a) {
         //@ts-ignore
+        if (Array.isArray(recipe[a])) {
+          //@ts-ignore
+          return Object.values(params).includes(...recipe[a]);
+        }
+        //@ts-ignore
         return Object.values(params).includes(recipe[a]);
       });
     });
-    // console.log(filtered);
+    // if (filtered.length) {
+    //   dispatch(setHasFiltered(true));
+    // } else {
+    //   dispatch(setHasFiltered(false));
+    // }
     dispatch(setFilteredRecipes(filtered));
   };
 
@@ -128,14 +84,13 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setFilters();
-
     setFiltered();
 
     const page = (Number(searchParams.get("page")) || 1) - 1;
 
     dispatch(setCurPage(page));
     dispatch(setCurRecipes());
+    console.log(filters);
   }, [searchParams]);
 
   return (
@@ -174,7 +129,11 @@ const Home: React.FC = () => {
         </AsideLayout>
         <ContentLayout
           title={"Найденные рецепты"}
-          count={status === Status.Fulfilled ? recipes.length : 0}
+          count={
+            status === Status.Fulfilled
+              ? filteredRecipes.length || recipes.length
+              : 0
+          }
         >
           {status === Status.Fulfilled ? (
             <Cards recipes={curRecipes} />
@@ -182,7 +141,9 @@ const Home: React.FC = () => {
             "LOADING"
           )}
           <Pagination
-            pages={Math.ceil(recipes.length / LIMIT)}
+            pages={Math.ceil(
+              (filteredRecipes.length || recipes.length) / LIMIT
+            )}
             updateParams={updateQS}
           />
         </ContentLayout>

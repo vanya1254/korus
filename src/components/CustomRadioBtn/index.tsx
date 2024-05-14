@@ -6,28 +6,34 @@ type CustomRadioBtnPropsT = {
   className?: string;
   htmlId: string;
   htmlName: string;
-  // htmlChecked: boolean;
+  htmlChecked: boolean;
   value: string;
   text: string;
+  onClick?: () => void;
 };
 
 export const CustomRadioBtn: React.FC<CustomRadioBtnPropsT> = ({
   className,
   htmlId,
   htmlName,
-  // htmlChecked,
+  htmlChecked,
   value,
   text,
+  onClick,
 }) => {
   return (
-    <div className={`${styles.root} ${className}`}>
+    <div
+      className={`${styles.root} ${className} ${
+        htmlChecked ? styles.root_active : ""
+      }`}
+    >
       <input
         className={styles.root_radio}
         type="radio"
         id={htmlId}
         name={htmlName}
         value={value}
-        // checked={htmlChecked}
+        onClick={onClick}
       />
       <label className={styles.root_label} htmlFor={htmlId}>
         {text}

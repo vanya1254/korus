@@ -48,6 +48,8 @@ export const Filters: React.FC<FiltersPropsT> = ({ pushQS, deleteQS }) => {
                   className={styles.root_options}
                   htmlName={filter.name}
                   group={getOptions(filter)}
+                  pushQS={pushQS}
+                  deleteQS={deleteQS}
                 />
               </fieldset>
             ) : (

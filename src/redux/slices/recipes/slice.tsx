@@ -3,7 +3,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RecipesState } from "./types";
 import { RecipeT, Status } from "../../types";
 import { LIMIT } from "../../../constants";
-import { stat } from "fs";
 
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",

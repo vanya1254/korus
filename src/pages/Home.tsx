@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
@@ -8,19 +8,15 @@ import {
   setCurPage,
   setCurRecipes,
   setFilteredRecipes,
-  setHasFiltered,
 } from "../redux/slices/recipes/slice";
-import {
-  fetchFiltersFields,
-  setActiveValue,
-} from "../redux/slices/filters/slice";
+import { fetchFiltersFields } from "../redux/slices/filters/slice";
 import { filtersSelector } from "../redux/slices/filters/selectors";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
 
-import { ACTIVE_FILTERS, FILTERS_NAMES, LIMIT } from "../constants";
-import { OptionT, RecipeT, Status } from "../redux/types";
+import { LIMIT } from "../constants";
+import { RecipeT, Status } from "../redux/types";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -90,7 +86,6 @@ const Home: React.FC = () => {
 
     dispatch(setCurPage(page));
     dispatch(setCurRecipes());
-    console.log(filters);
   }, [searchParams]);
 
   return (

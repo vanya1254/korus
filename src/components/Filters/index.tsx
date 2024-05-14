@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAppSelector } from "../../redux/hooks";
 
 import { CustomSelect, RadioBtns } from "..";
 
 import { filtersSelector } from "../../redux/slices/filters/selectors";
 
-import { FILTERS, FILTERS_LABELS, selects } from "../../constants";
-import { OptionT, Status } from "../../redux/types";
+import { FILTERS_LABELS } from "../../constants";
+import { Status } from "../../redux/types";
+import { FiltersT } from "../../redux/slices/filters/types";
 
 import styles from "./Filters.module.scss";
-import { FiltersT } from "../../redux/slices/filters/types";
 
 type FiltersPropsT = {
   pushQS: (name: string, value: string) => void;

@@ -7,20 +7,24 @@ import {
   fetchRecipes,
   setCurPage,
   setCurRecipes,
-  setRecipes,
+  setFilteredRecipes,
 } from "../redux/slices/recipes/slice";
-import { fetchFiltersFields } from "../redux/slices/filters/slice";
+import {
+  fetchFiltersFields,
+  setActiveValue,
+} from "../redux/slices/filters/slice";
 import { filtersSelector } from "../redux/slices/filters/selectors";
 
 import { AsideLayout, ContentLayout, MainLayout } from "../layouts";
 import { Additional, Cards, Filters, Header, Pagination } from "../components";
 
-import { ACTIVE_FILTERS, LIMIT } from "../constants";
+import { ACTIVE_FILTERS, FILTERS_NAMES, LIMIT } from "../constants";
 import { OptionT, RecipeT, Status } from "../redux/types";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { status, recipes, curRecipes } = useAppSelector(recipesSelector);
+  const { status, recipes, filteredRecipes, curRecipes, curPage } =
+    useAppSelector(recipesSelector);
   const { filters } = useAppSelector(filtersSelector);
   const [searchParams, setSearchParams] = useSearchParams();
   const isFirstLoading = useRef(true);
@@ -77,7 +81,42 @@ const Home: React.FC = () => {
   //   dispatch(setRecipes(filteredRecipes));
   // };
 
-  const setFilteredRecipes = () => {};
+  const setFilters = () => {
+    // let onChangeFilters = false;
+
+    FILTERS_NAMES.forEach((name) => {
+      const value = searchParams.get(name);
+      if (value) {
+        dispatch(setActiveValue({ name, value }));
+      } else {
+        dispatch(setActiveValue({ name, value: "" }));
+      }
+      // onChangeFilters = true;
+    });
+
+    // return onChangeFilters;
+    console.log(filters);
+  };
+
+  const setFiltered = () => {
+    const params = {};
+
+    filters.forEach((filter) => {
+      if (filter.activeValue) {
+        //@ts-ignore
+        params[filter.name] = filter.activeValue;
+      }
+    });
+
+    const filtered: RecipeT[] = recipes.filter(function (recipe) {
+      return Object.keys(params).every(function (a) {
+        //@ts-ignore
+        return Object.values(params).includes(recipe[a]);
+      });
+    });
+    // console.log(filtered);
+    dispatch(setFilteredRecipes(filtered));
+  };
 
   useEffect(() => {
     if (isFirstLoading.current) {
@@ -89,7 +128,9 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredRecipes();
+    setFilters();
+
+    setFiltered();
 
     const page = (Number(searchParams.get("page")) || 1) - 1;
 

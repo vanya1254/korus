@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { OptionT } from "../../redux/types";
 
@@ -42,6 +42,8 @@ export const CustomSelect: React.FC<CustomSelectPropsT> = ({
       deleteQS(htmlName);
     }
   };
+
+  useEffect(() => {}, [selected]);
 
   return (
     <div className={`${styles.root} ${className ? className : ""}`}>

@@ -23,6 +23,7 @@ export const fetchRecipes = createAsyncThunk(
 
 const initialState: RecipesState = {
   recipes: [],
+  filteredRecipes: [],
   curRecipes: [],
   curPage: 0,
   status: Status.Pending,
@@ -32,14 +33,21 @@ export const recipesSlice = createSlice({
   name: "recipes",
   initialState,
   reducers: {
-    setRecipes: (state, action: PayloadAction<RecipeT[]>) => {
-      state.recipes = action.payload;
+    setFilteredRecipes: (state, action: PayloadAction<RecipeT[]>) => {
+      state.filteredRecipes = action.payload;
     },
     setCurRecipes: (state) => {
-      state.curRecipes = state.recipes.slice(
-        state.curPage * LIMIT,
-        state.curPage * LIMIT + LIMIT
-      );
+      if (state.filteredRecipes.length) {
+        state.curRecipes = state.filteredRecipes.slice(
+          state.curPage * LIMIT,
+          state.curPage * LIMIT + LIMIT
+        );
+      } else {
+        state.curRecipes = state.recipes.slice(
+          state.curPage * LIMIT,
+          state.curPage * LIMIT + LIMIT
+        );
+      }
     },
     setCurPage: (state, action: PayloadAction<number>) => {
       state.curPage = action.payload;
@@ -69,6 +77,7 @@ export const recipesSlice = createSlice({
   },
 });
 
-export const { setRecipes, setCurRecipes, setCurPage } = recipesSlice.actions;
+export const { setFilteredRecipes, setCurRecipes, setCurPage } =
+  recipesSlice.actions;
 
 export default recipesSlice.reducer;

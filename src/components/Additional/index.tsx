@@ -17,7 +17,7 @@ export const Additional: React.FC = () => {
     const curRecipes = filteredRecipes.length ? filteredRecipes : recipes;
     const rndIdx = getRandom(0, curRecipes.length - 1);
 
-    navigate(`/recipes/${curRecipes[rndIdx].id}`);
+    navigate(`/korus/recipes/${curRecipes[rndIdx].id}`);
   };
 
   return (

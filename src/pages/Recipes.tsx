@@ -17,7 +17,7 @@ const Recipes: React.FC = () => {
   const { status, recipe } = useAppSelector(recipeSelector);
 
   useEffect(() => {
-    dispatch(fetchRecipe(location.pathname.replace("/recipes/", "")));
+    dispatch(fetchRecipe(location.pathname.replace("korus/recipes/", "")));
   }, []);
 
   return (

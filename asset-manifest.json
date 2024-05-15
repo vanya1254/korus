@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/%20//vanya1254.github.io/static/css/main.52ed6f60.css",
+    "main.js": "/%20//vanya1254.github.io/static/js/main.b82df140.js",
+    "index.html": "/%20//vanya1254.github.io/index.html",
+    "main.52ed6f60.css.map": "/%20//vanya1254.github.io/static/css/main.52ed6f60.css.map",
+    "main.b82df140.js.map": "/%20//vanya1254.github.io/static/js/main.b82df140.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.52ed6f60.css",
+    "static/js/main.b82df140.js"
+  ]
+}
